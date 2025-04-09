@@ -51,6 +51,7 @@ def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('שלום! אני בוט שיזכיר לך להטעין את כרטיס תן ביס.')
     context.user_data['chat_id'] = update.effective_chat.id
     logger.info(f"Bot started. Chat ID: {update.effective_chat.id}")
+    ask_working_status(context)
 
 
 def ask_working_status(context: CallbackContext) -> None:
@@ -461,6 +462,8 @@ def main() -> None:
     # Register command handlers
     dispatcher.add_handler(CommandHandler("start", start))
 
+    dispatcher.add_handler(CommandHandler("now", start))
+
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_text_message))
 
     # Register callback query handler
@@ -471,11 +474,10 @@ def main() -> None:
     logger.info("Bot started and polling for updates")
 
     # Schedule the daily question at 11:00 AM
-    # load_10bis_credit(context=CallbackContext(dispatcher))
-    ask_working_status(CallbackContext(dispatcher))
-    # schedule.every().day.at("17:00").do(
-    #     lambda: ask_working_status(CallbackContext(dispatcher))
-    # )
+    # ask_working_status(CallbackContext(dispatcher))
+    schedule.every().day.at("11:00").do(
+        lambda: ask_working_status(CallbackContext(dispatcher))
+    )
 
     # Schedule the reset of the daily flag at midnight
     schedule.every().day.at("00:00").do(reset_daily_flag)
