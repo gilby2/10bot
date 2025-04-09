@@ -1,7 +1,3 @@
-[Yesterday 6: 21
-PM] Gil
-Ben
-Yashar
 import os
 import logging
 import time
