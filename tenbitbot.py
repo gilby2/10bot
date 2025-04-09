@@ -157,7 +157,9 @@ def handle_text_message(update: Update, context: CallbackContext) -> None:
 
             # Find and click the submit button
             submit_button = browser.find_element(By.XPATH, "//button[@type='submit']")
+            time.sleep(2)
             submit_button.click()
+            time.sleep(2)
 
             # Wait for successful login
             WebDriverWait(browser, 10).until(
@@ -257,7 +259,7 @@ def continue_load_10bis_credit(context, browser, chat_id):
 
         # Wait for payment processing
         WebDriverWait(browser, 20).until(
-            EC.presence_of_element_located((By.XPATH, "//div[contains(text(), 'תשלום הושלם בהצלחה')]"))
+            EC.presence_of_element_located((By.XPATH, "//div[contains(text(), 'סגירה')]"))
         )
         logger.info("Payment completed successfully")
 
