@@ -259,9 +259,10 @@ def continue_load_10bis_credit(context, browser, chat_id):
         logger.info("Confirmed credit load")
 
         # Wait for payment processing
-        WebDriverWait(browser, 20).until(
-            EC.presence_of_element_located((By.XPATH, "//div[contains(text(), 'סגירה')]"))
-        )
+        WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//button[contains(text(), 'סגירה')]")))
+        close_button = browser.find_element(By.XPATH, "//button[contains(text(), 'סגירה')]")
+        close_button.click()
         logger.info("Payment completed successfully")
 
         # Send success message
